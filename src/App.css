@@ -1,7 +1,18 @@
-.App {
+@import url('https://fonts.googleapis.com/css?family=Bangers|Cinzel:400,700,900|Lato:100,300,400,700,900|Audiowide|Lora:400,700|Mansalva|Muli:200,300,400,600,700,800,900|Open+Sans:300,400,600,700,800|Oswald:200,300,400,500,600,700|Roboto:100,300,400,500,700,900&display=swap');
+body{
+  background-color: #3e7980;
+}.App {
   text-align: center;
+  
 }
-
+h1{
+  color:white;
+  font-size:3em;
+  font-family: 'Audiowide', cursive;
+}
+.displayFlex{
+  display: flex;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -22,6 +33,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  font-family: 'Lobster', cursive;
 }
 
 .App-link {
