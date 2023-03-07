@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import './AskQuestionInput.scss';
-export default function AskQuestion({askHandler,inputChangeHandler}){
+export default function AskQuestionInput({askHandler,inputChangeHandler}){
     const [currentQuestion,setCurrentQuestion] = useState('');
     const askInputChange = (e) => {
         inputChangeHandler(e);

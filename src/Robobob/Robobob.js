@@ -5,7 +5,7 @@ import AskQuestion from '../AskQuestionInput/AskQuestionInput';
 import aboutRobobob from '../data/aboutRobobob.json';
 import calculateResult from '../utils/arithmeticCalculation';
 
-function App() {
+function Robobob() {
   const [currentQuestion,setCurrentQuestion] = useState('');
   const [currentAnswer,setCurrentAnswer] = useState('');
   const [invalidQuestion,setInvalidQuestion] = useState('');
@@ -76,4 +76,4 @@ function App() {
   );
 }
 
-export default App;
+export default Robobob;
