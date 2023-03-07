@@ -1,35 +1,33 @@
-import {render, screen } from '@testing-library/react';
+import {render, screen , cleanup} from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-import AskQuestion from './AskQuestionInput';
-
-describe('Test AskQuestion component',()=>{
+import AskQuestionInput from './AskQuestionInput';
+afterEach(cleanup)
+describe('AskQuestion component',()=>{
     const askHandler = jest.fn((value) => value);
     const inputChangeHandler = jest.fn((value) => value);
-    test('should render Input element',()=>{
-        render(<AskQuestion askHandler={askHandler}  inputChangeHandler={inputChangeHandler}/>);
+    test('should render input element',()=>{
+        render(<AskQuestionInput askHandler={askHandler}  inputChangeHandler={inputChangeHandler}/>);
         const inputElement = screen.getByPlaceholderText('Ask me something');
         expect(inputElement).toBeInTheDocument();
      })
-     test('should render Button element',()=>{
-        render(<AskQuestion askHandler={askHandler}  inputChangeHandler={inputChangeHandler}/>);
+     test('should render button element',()=>{
+        render(<AskQuestionInput askHandler={askHandler}  inputChangeHandler={inputChangeHandler}/>);
         const buttonElement = screen.getByRole('button',{name:/ASK/i});
         expect(buttonElement).toBeInTheDocument();
      })
-    test('should hold Input value when user type', () => {
-        render(<AskQuestion askHandler={askHandler} setInputVal="Name" inputChangeHandler={inputChangeHandler}/>);
+    test('should hold input value when user type', () => {
+        render(<AskQuestionInput askHandler={askHandler} setInputVal="Name" inputChangeHandler={inputChangeHandler}/>);
         const inputElement = screen.getByPlaceholderText('Ask me something');
-        const buttonElement = screen.getByRole('button',{name:/ASK/i});
         userEvent.type(inputElement, 'Name')
         expect(inputElement).toHaveValue('Name')
       });
       test('should call askHandler when the ask button is clicked', () => {
-        render(<AskQuestion askHandler={askHandler} setInputVal="Name" inputChangeHandler={inputChangeHandler}/>);
+        render(<AskQuestionInput askHandler={askHandler} setInputVal="Name" inputChangeHandler={inputChangeHandler}/>);
         const inputElement = screen.getByPlaceholderText('Ask me something');
         const buttonElement = screen.getByRole('button',{name:/ASK/i});
         userEvent.type(inputElement, 'Name')
         expect(inputElement).toHaveValue('Name')
         userEvent.click(buttonElement);
         expect(askHandler).toHaveBeenCalledTimes(1);
-        // expect(handleClick).toHaveReturnedWith('Button clicked');
       });
 })

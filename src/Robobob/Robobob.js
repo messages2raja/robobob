@@ -1,77 +1,85 @@
-import React, {useState} from 'react';
-import Robo from '../Robo/Robo'; 
-import './Robobob.css'
-import AskQuestion from '../AskQuestionInput/AskQuestionInput';
-import aboutRobobob from '../data/aboutRobobob.json';
-import calculateResult from '../utils/arithmeticCalculation';
+import React, { useState } from "react";
+import Robo from "../Robo/Robo";
+import "./Robobob.css";
+import AskQuestion from "../AskQuestionInput/AskQuestionInput";
+import aboutRobobob from "../data/aboutRobobob.json";
+import calculateResult from "../utils/arithmeticCalculation";
+
+const appName = "ROBOBOB";
+const inputPattern = /^[\d+\-*/.\s]+$/;
 
 function Robobob() {
-  const [currentQuestion,setCurrentQuestion] = useState('');
-  const [currentAnswer,setCurrentAnswer] = useState('');
-  const [invalidQuestion,setInvalidQuestion] = useState('');
-  const [inputVal,setInputVal] = useState('');
-  const [prevQuestion,setPrevQuestion] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState("");
+  const [currentAnswer, setCurrentAnswer] = useState("");
+  const [invalidQuestion, setInvalidQuestion] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [previousQueries, setPreviousQueries] = useState([]);
 
   //Ask Question button click Handler
-  const askHandler = (e,inputValue) => {
-    e.preventDefault();
-    const inputPattern = /^[\d+\-*/.\s]+$/;
-    const isValidInput = (inputValue) => {
-     return inputPattern.test(inputValue);
-    }
-    if (isValidInput(inputValue)) {
-      const questionAsked = `Evaluate ${inputValue}`;
-      let evaluatedAnswer = calculateResult(inputValue);
-      setCurrentAnswer(evaluatedAnswer);
-      setInvalidQuestion('');
-      const saveCurrentQuestion = {
-        question:questionAsked,
-        answer:evaluatedAnswer
+  const askHandler = (inputValue) => {
+    if (inputPattern.test(inputValue)) {
+      const question = `Evaluate ${inputValue}`;
+      let answer = calculateResult(inputValue);
+      setCurrentAnswer(answer);
+      setInvalidQuestion("");
+      const currentQuery = {
+        question,
+        answer,
+      };
+      const existingQuery = previousQueries.find(
+        (previousQuery) => previousQuery.question === currentQuery.question
+      );
+      if (!existingQuery) {
+        setPreviousQueries([...previousQueries, currentQuery]);
       }
-      const findInExistingQuestions = prevQuestion.find((obj)=>obj.question === saveCurrentQuestion.question)
-      if(!findInExistingQuestions){
-      setPrevQuestion([...prevQuestion,saveCurrentQuestion]);
-      }
-    }
-    else{
+    } else {
       setCurrentQuestion(inputValue);
-      searchQuestion(inputValue);
+      search(inputValue);
     }
- 
-  }
-   //Ask Question Input change Handler
+  };
+  //Ask Question Input change Handler
   const inputChangeHandler = (e) => {
     const currentInputValue = e.target.value;
-    setInputVal(currentInputValue);
-    if(currentInputValue.length===0){
-      setCurrentAnswer('');
-      setInvalidQuestion('');
+    setInputValue(currentInputValue);
+    if (currentInputValue.length === 0) {
+      setCurrentAnswer("");
+      setInvalidQuestion("");
     }
-  }
+  };
 
-//Search if the current question exists in the previous questions array to avoid redundant entries in previously asked questions
-  const searchQuestion = (curr) => {
-    console.log(currentQuestion);
-    const filterQuestions = aboutRobobob.filter((about)=> about.question.toLowerCase().includes(curr.toLowerCase()));
-    if(filterQuestions.length){
-      const findInExistingQuestions = prevQuestion.find((obj)=>obj.question === filterQuestions[0].question)
-      if(!findInExistingQuestions){
-        setPrevQuestion([...prevQuestion,...filterQuestions]);
-        setCurrentAnswer('')
+  //Search if the current question exists in the previous Queries array to avoid redundant entries in previously asked Queries
+  const search = (curr) => {
+    const filterQueries = aboutRobobob.filter((about) =>
+      about.question.toLowerCase().includes(curr.toLowerCase())
+    );
+    if (filterQueries.length) {
+      const findInExistingQueries = previousQueries.find(
+        (obj) => obj.question === filterQueries[0].question
+      );
+      if (!findInExistingQueries) {
+        setPreviousQueries([...previousQueries, ...filterQueries]);
+        setCurrentAnswer("");
       }
-      setCurrentAnswer(filterQuestions[0].answer);
-      setInvalidQuestion('')
+      setCurrentAnswer(filterQueries[0].answer);
+      setInvalidQuestion("");
+    } else {
+      setInvalidQuestion("invalid");
+      setCurrentAnswer("");
     }
-    else{
-      setInvalidQuestion("invalid")
-      setCurrentAnswer('')
-    }
-    }
+  };
   return (
     <div className="App">
-    <h1>ROBOBOB</h1>
-    <Robo currentAnswer={currentAnswer} prevQuestion={prevQuestion} invalidQuestion={invalidQuestion} inputVal={inputVal}/>
-    <AskQuestion askHandler={askHandler} inputChangeHandler={inputChangeHandler}/>
+      <h1>{appName}</h1>
+      <Robo
+        currentAnswer={currentAnswer}
+        previousQueries={previousQueries}
+        invalidQuestion={invalidQuestion}
+        inputValue={inputValue}
+      />
+      <AskQuestion
+        askHandler={askHandler}
+        inputChangeHandler={inputChangeHandler}
+      />
     </div>
   );
 }

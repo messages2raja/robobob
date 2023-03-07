@@ -1,9 +1,8 @@
-
 import { render, screen } from '@testing-library/react';
-import App from './Robobob';
+import Robobob from './Robobob';
 
 test('renders the heading', () => {
-  render(<App />);
+  render(<Robobob />);
   const headingElement = screen.getByText(/ROBOBOB/i);
   expect(headingElement).toBeInTheDocument();
 });

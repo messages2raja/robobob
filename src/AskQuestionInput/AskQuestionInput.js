@@ -7,14 +7,15 @@ export default function AskQuestionInput({askHandler,inputChangeHandler}){
         setCurrentQuestion(e.target.value);
     }
     const askButtonClick = (e) => {
-        askHandler(e,currentQuestion);
+        e.preventDefault();
+        askHandler(currentQuestion);
         setCurrentQuestion('');
     }
     return(
         <div className="questions-container">
             <form className="display-question" onSubmit={askButtonClick}>
             <div><input type="search" value={currentQuestion} onChange={askInputChange} placeholder="Ask me something"/></div>
-            <button type="submit">ASK</button>
+            <button type="submit" disabled={!currentQuestion}>ASK</button>
             </form>
         </div>
     )

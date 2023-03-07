@@ -1,27 +1,21 @@
 import './Robo.scss';
-export default function Robo({prevQuestion,currentAnswer,invalidQuestion,inputVal}){
+export default function Robo({previousQueries,currentAnswer,invalidQuestion,inputValue}){
     return(
         <div className="cute-robot-v1">
             <div className="sideFlex">
-                {prevQuestion.length > 0 && (<h3>Previously Answered questions</h3>)}
-                <ol>
-                {
-                    
-                    prevQuestion.map((obj,index)=>(
-                    <>
-                    <li key={index}> Question:{obj.question} - Answer: {obj.answer}</li>
-                    </>
-                    ))
+                {previousQueries.length > 0 && (<h3>Previously Answered questions</h3>)}
+                <ol key="list">
+                {previousQueries.map((obj,index)=><li key={index}> Question:{obj.question} - Answer: {obj.answer}</li>)
                 }
                 </ol>
             </div>
-            <div className={((currentAnswer || invalidQuestion) && inputVal) ? 'circle-bg open' : 'circle-bg'}>
+            <div className={((currentAnswer || invalidQuestion) && inputValue) ? 'circle-bg open' : 'circle-bg'}>
                 <div className="robot-ear left"></div>
                      <div className="robot-head">
                         <div className="robot-face">
-                        {(currentAnswer && inputVal) 
+                        {(currentAnswer && inputValue) 
                          ?(<div data-testid="displayAnswer" className="anwserEye">{currentAnswer}</div>)
-                         :(invalidQuestion && inputVal)
+                         :(invalidQuestion && inputValue)
                          ?(<div data-testid="displayInvalid" className="anwserError">{invalidQuestion}</div>)
                         :(<><div className="eyes left"></div>
                             <div className="eyes right"></div></>)
