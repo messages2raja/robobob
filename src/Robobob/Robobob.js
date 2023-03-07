@@ -17,6 +17,7 @@ function Robobob() {
 
   //Ask Question button click Handler
   const askHandler = (inputValue) => {
+    console.log("inputValue", typeof inputValue);
     if (inputPattern.test(inputValue)) {
       const question = `Evaluate ${inputValue}`;
       let answer = calculateResult(inputValue);
@@ -79,6 +80,7 @@ function Robobob() {
       <AskQuestion
         askHandler={askHandler}
         inputChangeHandler={inputChangeHandler}
+        invalidQuestion={invalidQuestion}
       />
     </div>
   );
