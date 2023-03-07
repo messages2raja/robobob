@@ -1,21 +1,20 @@
 import React, {useState} from 'react';
-import './App.css';
-import Robo from './Robo'; 
-import AskQuestion from './AskQuestion';
-import aboutRobobob from './data/aboutRobo.json';
-import calculateResult from './arithmeticCalculation';
+import Robo from '../Robo/Robo'; 
+import './Robobob.css'
+import AskQuestion from '../AskQuestionInput/AskQuestionInput';
+import aboutRobobob from '../data/aboutRobobob.json';
+import calculateResult from '../utils/arithmeticCalculation';
 
 function App() {
-  const [questions,setQuestions] = useState('')
   const [currentQuestion,setCurrentQuestion] = useState('');
   const [currentAnswer,setCurrentAnswer] = useState('');
   const [invalidQuestion,setInvalidQuestion] = useState('');
   const [inputVal,setInputVal] = useState('');
   const [prevQuestion,setPrevQuestion] = useState([]);
 
-  //Ask button click functionality
+  //Ask Question button click Handler
   const askHandler = (e,inputValue) => {
-     e.preventDefault();
+    e.preventDefault();
     const inputPattern = /^[\d+\-*/.\s]+$/;
     const isValidInput = (inputValue) => {
      return inputPattern.test(inputValue);
@@ -23,9 +22,6 @@ function App() {
     if (isValidInput(inputValue)) {
       const questionAsked = `Evaluate ${inputValue}`;
       let evaluatedAnswer = calculateResult(inputValue);
-      if(evaluatedAnswer.toString().length>7){
-        evaluatedAnswer = evaluatedAnswer.toFixed(7);
-      }
       setCurrentAnswer(evaluatedAnswer);
       setInvalidQuestion('');
       const saveCurrentQuestion = {
@@ -43,9 +39,8 @@ function App() {
     }
  
   }
-   //Ask Input change functionality
+   //Ask Question Input change Handler
   const inputChangeHandler = (e) => {
-    e.stopPropagation();
     const currentInputValue = e.target.value;
     setInputVal(currentInputValue);
     if(currentInputValue.length===0){
@@ -53,7 +48,8 @@ function App() {
       setInvalidQuestion('');
     }
   }
-//Search if current question is already there in the previous questions array
+
+//Search if the current question exists in the previous questions array to avoid redundant entries in previously asked questions
   const searchQuestion = (curr) => {
     console.log(currentQuestion);
     const filterQuestions = aboutRobobob.filter((about)=> about.question.toLowerCase().includes(curr.toLowerCase()));

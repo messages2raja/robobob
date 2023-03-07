@@ -4,16 +4,16 @@ export default function Robo({prevQuestion,currentAnswer,invalidQuestion,inputVa
         <div className="cute-robot-v1">
             <div className="sideFlex">
                 {prevQuestion.length > 0 && (<h3>Previously Answered questions</h3>)}
-                <ul>
+                <ol>
                 {
                     
                     prevQuestion.map((obj,index)=>(
                     <>
-                    <li key={index}> Q:{obj.question} - A: {obj.answer}</li>
+                    <li key={index}> Question:{obj.question} - Answer: {obj.answer}</li>
                     </>
                     ))
                 }
-                </ul>
+                </ol>
             </div>
             <div className={((currentAnswer || invalidQuestion) && inputVal) ? 'circle-bg open' : 'circle-bg'}>
                 <div className="robot-ear left"></div>
@@ -26,8 +26,7 @@ export default function Robo({prevQuestion,currentAnswer,invalidQuestion,inputVa
                         :(<><div className="eyes left"></div>
                             <div className="eyes right"></div></>)
                         }
-                            
-                            <div className="mouth open"></div>
+                        <div className="mouth open"></div>
                         </div>
                    </div>
                 <div className="robot-ear right"></div>

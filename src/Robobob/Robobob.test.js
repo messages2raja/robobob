@@ -1,6 +1,6 @@
 
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import App from './Robobob';
 
 test('renders the heading', () => {
   render(<App />);

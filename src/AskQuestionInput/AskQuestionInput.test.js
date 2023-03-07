@@ -1,6 +1,6 @@
 import {render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-import AskQuestion from './AskQuestion';
+import AskQuestion from './AskQuestionInput';
 
 describe('Test AskQuestion component',()=>{
     const askHandler = jest.fn((value) => value);
