@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Robo from "../Robo/Robo";
 import "./Robobob.css";
-import AskQuestion from "../AskQuestionInput/AskQuestionInput";
-import aboutRobobob from "../data/aboutRobobob.json";
-import calculateResult from "../utils/arithmeticCalculation";
+import AskQuestionInput from "../AskQuestionInput/AskQuestionInput";
+import aboutRobobob from "../../data/aboutRobobob.json";
+import calculateResult from "../../utils/arithmeticCalculation";
 
 const appName = "ROBOBOB";
 const inputPattern = /^[\d+\-*/.\s]+$/;
@@ -77,7 +77,7 @@ function Robobob() {
         invalidQuestion={invalidQuestion}
         inputValue={inputValue}
       />
-      <AskQuestion
+      <AskQuestionInput
         askHandler={askHandler}
         inputChangeHandler={inputChangeHandler}
         invalidQuestion={invalidQuestion}
